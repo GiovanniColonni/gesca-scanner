@@ -8,6 +8,9 @@ node_modules/
 dist/
 web-build/
 
+gesca-scanner/android
+gesca-scanner/ios
+
 # Native
 *.orig.*
 *.jks
