@@ -1,1 +1,0 @@
-/home/colo/Desktop/testReactNative/gesca-scanner/android/app/build/intermediates/cxx/Debug/2e6i6fn4/obj/x86

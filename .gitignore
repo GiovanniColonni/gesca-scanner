@@ -8,6 +8,8 @@ node_modules/
 dist/
 web-build/
 
+# Build
+android/
 gesca-scanner/android
 gesca-scanner/ios
 
