@@ -13,7 +13,20 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "android": {
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.anonymous.gescascanner"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "13273429-adf5-4da0-bfac-0e289e512d40"
+      }
+    }
   },
-  "name": "gesca-scanner"
+  "name": "gesca-scanner",
+  "icon": "./assets/logo3.png"
 }

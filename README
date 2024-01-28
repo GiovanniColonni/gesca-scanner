@@ -1,0 +1,10 @@
+# Gesca Scanner
+
+[Your App Name] is a mobile application developed using Expo and React Native, designed for efficient and user-friendly barcode scanning. This app utilizes the device's camera to scan and decode barcodes, providing a seamless experience for users.
+
+## Built With
+
+- [Expo](https://expo.dev/) - Framework used for universal React applications
+- [React Native](https://reactnative.dev/) - The framework used
+- [Add any other libraries or frameworks used]
+

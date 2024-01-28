@@ -2,7 +2,7 @@ import z from "zod";
 
 export const confSchema = z.object({
     serverIP: z.string().default(""),
-    port: z.preprocess((port)=>(Number(port)),z.number()).default(0),
+    port: z.preprocess((port)=>(Number(port)),z.number()).default(5000),
     username: z.string().default(""),
     password: z.string().default(""),
     databaseName: z.string().default(""),

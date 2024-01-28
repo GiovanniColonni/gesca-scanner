@@ -1,13 +1,18 @@
 import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
     container: {
-        flex: 1,
         alignItems: "center",
         justifyContent: "center",
         padding: 20,
+        margin:5,
     },
     containerHome: {
         flex: 1,
+        alignItems: "left",
+        justifyContent: "flex-start",
+        padding: 20,
+    },
+    containerHome1: {
         alignItems: "left",
         justifyContent: "flex-start",
         padding: 20,
@@ -42,6 +47,7 @@ export const styles = StyleSheet.create({
     },
     body1: {
         fontSize: 16,
+        textAlign: 'center',
         //marginVertical: 10,
         // Additional styling if needed
     },
@@ -50,5 +56,34 @@ export const styles = StyleSheet.create({
     },
     value: {
         fontWeight: 'normal',
+    },
+    // HISTORY
+    containerHistory: {
+        padding: 20,
+        margin: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    table: {
+        width: '100%',
+        marginTop: 10,
+    },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 5,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+    },
+    codeText: {
+        // Styles for the code text
+        fontSize: 16,
+        padding: 3,
+    },
+    clickText: {
+        // Styles for the clickable text
+        fontSize: 16,
+        color: 'blue',
     },
 });

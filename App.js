@@ -1,21 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import {NavigationContainer} from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import AntDesign from "react-native-vector-icons/AntDesign";
-import GescaLogo from "./assets/icons/logo-small.png"
+import GescaLogo from "./assets/icons/logo3.png"
 import HomeComponent from './components/Home/Home';
 import SettingComponent from './components/Settings/Settings';
-import CronologiaComponent from './components/CronologiaScanners/Cronologia';
+import InfoPage from './components/Info/InfoPage';
 import { Icon, Image, TouchableOpacity } from "react-native"
+import ScannerCode from './components/Scanner/Scanner';
 
 const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home"
+      <Drawer.Navigator initialRouteName="Scanner"
         screenOptions={({ navigation }) => ({
           headerStyle: {
             backgroundColor: 'grey',
@@ -27,18 +28,27 @@ export default function App() {
           headerLeft: () => (
             <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
               <Image
-                style={{ width: 40, height: 40, marginLeft: 8 }}
+                style={{ width: 45, height: 45, marginLeft: 8 }}
                 source={GescaLogo}
               />
             </TouchableOpacity>
           )
         })}>
-        <Drawer.Screen name="Home" component={HomeComponent} options={{
+        <Drawer.Screen name="Scanner" component={ScannerCode} options={{
           drawerIcon: ({ focused, size }) => (
             <AntDesign
               name="home"
               size={size}
-              color={"red"}
+              color={"#246ded"}
+            />
+          )
+        }} />
+        <Drawer.Screen name="Articolo" component={HomeComponent} options={{
+          drawerIcon: ({ focused, size }) => (
+            <AntDesign
+              name="search1"
+              color="#246ded"
+              size={size}
             />
           )
         }} />
@@ -47,15 +57,15 @@ export default function App() {
             <AntDesign
               name="setting"
               size={size}
-              color={"red"}
+              color={"#246ded"}
             />
           )
         }} />
-        <Drawer.Screen name="Cronologia" component={CronologiaComponent} options={{
+        <Drawer.Screen name="Info Applicazione" component={InfoPage} options={{
           drawerIcon: ({ focused, size }) => (
             <AntDesign
-              name="search1"
-              color="red"
+              name="info"
+              color="#246ded"
               size={size}
             />
           )
