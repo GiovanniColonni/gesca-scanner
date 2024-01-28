@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "RNReactNativeScannerViewSpec_autolinked_build",
+		"source" : "/home/colo/Desktop/testReactNative/gesca-scanner/node_modules/@pushpendersingh/react-native-scanner/android/build/generated/source/codegen/jni"
+	}
+}
