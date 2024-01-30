@@ -1,5 +1,6 @@
 {
   "expo": {
+    "icon": "./assets/icons/AppIcon.png",
     "plugins": [
       [
         "expo-camera",
@@ -8,6 +9,11 @@
         }
       ]
     ],
+    "splash": {
+      "image": "./assets/icons/logo3.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
     "name": "gesca-scanner",
     "slug": "gesca-scanner",
     "version": "1.0.0",
@@ -19,14 +25,20 @@
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.anonymous.gescascanner"
+      "package": "com.anonymous.gescascanner",
+      "versionCode": 1
     },
     "extra": {
       "eas": {
         "projectId": "13273429-adf5-4da0-bfac-0e289e512d40"
       }
-    }
-  },
-  "name": "gesca-scanner",
-  "icon": "./assets/logo3.png"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/13273429-adf5-4da0-bfac-0e289e512d40"
+    },
+    "ios": {}
+  }
 }
