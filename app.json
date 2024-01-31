@@ -18,7 +18,7 @@
     "splash": {
       "image": "./assets/icons/AppIcon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#FFFFFF"
+      "backgroundColor": "#808080"
     },
     "assetBundlePatterns": [
       "**/*"

@@ -70,6 +70,7 @@ export default function App() {
             />
           )
         }} />
+        
         {/* Add other screens here */}
       </Drawer.Navigator>
     </NavigationContainer>

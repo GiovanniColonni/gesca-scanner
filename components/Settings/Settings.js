@@ -5,6 +5,7 @@ import CustomAlertComponent from "./ErrorModal";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles } from "../style";
 import { Card,Chip } from 'react-native-paper';
+import base64 from 'react-native-base64'
 
 function SettingComponent({ navigation }) {
 
@@ -89,7 +90,8 @@ function SettingComponent({ navigation }) {
     fetch("http://" + good.data.serverIP + ":" + good.data.port + "/healthcheck", {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic ' + base64.encode(good.data.username + ":" + good.data.password),
       }
     }).then((resp) => {
       if (resp.status == 200) {

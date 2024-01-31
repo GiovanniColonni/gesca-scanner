@@ -39,7 +39,6 @@ function ScannerCode({ navigation }) {
                 })    
             })
         }
-        console.log("HERE")
     })
 
 
