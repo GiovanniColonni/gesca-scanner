@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput, TouchableOpacity, Text, Alert, Button } from 'react-native';
 import AntDesign from "react-native-vector-icons/AntDesign";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useFocusEffect} from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
 import { CameraView, Camera } from "expo-camera/next";
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import ScanButton from './ScanButton';
+import { secondaryColor } from '../style';
 
 function ScannerCode({ navigation }) {
 
@@ -20,13 +21,15 @@ function ScannerCode({ navigation }) {
 
     const [code, setCode] = useState("")
     const [path, setPath] = useState("")
-    const [articolo,setArticolo] = useState({})
+    const [authCredentials, setAuthCredentials] = useState("")
+    const [articolo, setArticolo] = useState({})
 
+    // Update path
     useFocusEffect(() => {
         if (path === "") {
             let addr = ""
             let port = ""
-            
+
             AsyncStorage.getItem("serverIP").then((res) => {
                 addr = res
                 AsyncStorage.getItem("port").then((res) => {
@@ -34,13 +37,21 @@ function ScannerCode({ navigation }) {
                     if (addr === null || port === null) {
                         return
                     }
-        
+
                     setPath("http://" + addr + ":" + port)
-                })    
+                })
             })
         }
     })
 
+    useFocusEffect(() => {
+        AsyncStorage.getItem("authCredentials").then((res) => {
+            if (res === null) {
+                return
+            }
+            setAuthCredentials(res)
+        })
+    })
 
 
     const handleBarCodeScanned = ({ type, data }) => {
@@ -63,7 +74,7 @@ function ScannerCode({ navigation }) {
         };
 
         getCameraPermissions();
-        return () => {}
+        return () => { }
     }, []);
 
     useEffect(() => {
@@ -78,9 +89,15 @@ function ScannerCode({ navigation }) {
                 const resp = await fetch(path + "/articolo/" + code, {
                     method: 'GET',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': `Basic ${authCredentials}`,
                     },
                 })
+
+                if (resp.status === 401) {
+                    Alert.alert("Errore", "C'e' un problema con l'autenticazione")
+                    return
+                }
 
                 if (resp.status !== 200) {
                     Alert.alert("Errore", `Articolo ${code} non trovato`)
@@ -102,11 +119,11 @@ function ScannerCode({ navigation }) {
             search()
         }
 
-        return () => {}
+        return () => { }
     }, [startSearch]);
 
     useEffect(() => {
-        if(Object.keys(articolo).length > 0){
+        if (Object.keys(articolo).length > 0) {
             navigation.navigate("Articolo", articolo)
         }
     }, [articolo])
@@ -127,28 +144,29 @@ function ScannerCode({ navigation }) {
     }
 
     return (
-    <View style={{ flex: 1 }}>
-        {openCamera && (
-            <View style={styles_.cameraContainer}>
-                <BarCodeScanner
-                    onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-                    style={styles_.cameraContainer}
-                    barCodeTypes={barcodeTypes}
+        <View style={{ flex: 1 }}>
+            {openCamera && (
+                <View style={styles_.cameraContainer}>
+                    <BarCodeScanner
+                        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                        style={styles_.cameraContainer}
+                        barCodeTypes={barcodeTypes}
+                    />
+                </View>
+            )}
+            {!openCamera && <View style={styles_.bottomContainer}>
+                <TextInput
+                    style={styles_.textInput}
+                    placeholder="Inserisci codice articolo"
+                    onChangeText={(text) => setCode(text)}
                 />
+                <Button title="Cerca" onPress={() => setStartSearch(!startSearch)} />
+            </View>}
+            <View style={{ borderTop: 10, padding: 10 }}>
+                {!openCamera && <ScanButton onPress={activateScanner} />}
+                {openCamera && <Button color={secondaryColor} title="Chiudi Scanner" onPress={() => setOpenCamera(false)} />}
             </View>
-        )}
-        {!openCamera && <View style={styles_.bottomContainer}>
-            <TextInput
-                style={styles_.textInput}
-                placeholder="Inserisci codice articolo"
-                onChangeText={(text) => setCode(text)}
-            />
-            <Button title="Cerca" onPress={() => setStartSearch(!startSearch)} />
-        </View>}
-        {!openCamera && <ScanButton onPress={activateScanner} />}
-        {openCamera && <Button title="Chiudi Scanner" onPress={() => setOpenCamera(false)} />}
-
-    </View>
+        </View>
     );
 }
 

@@ -1,52 +1,90 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { styles } from "../style";
+import React, { useState } from 'react';
+import { Button,View,Text } from 'react-native';
+import { primaryColor,secondaryColor, styles } from "../style";
 import { Card } from 'react-native-paper';
+import { DataTable } from 'react-native-paper';
 
-const HistoryComponent = ({ history, onRowPress }) => {
+const HistoryComponent = ({ navigation }) => {
+
+  const [page, setPage] = React.useState(0);
+  const [numberOfItemsPerPageList] = React.useState([2, 5, 10, 15]);
+  const [itemsPerPage, onItemsPerPageChange] = React.useState(
+    numberOfItemsPerPageList[0]
+  );
+
+  const [items] = React.useState([
+    { 
+      key: 1,
+      codice: '6543210009400',
+      altro: 'che ci sta qui ?',
+    },
+    {
+      key: 2,
+      codice: '6543210009400',
+      altro: 'che ci sta qui ?',
+    },
+    {
+      key: 3,
+      codice: '6543210009400',
+      altro: 'che ci sta qui ?',
+    },
+    {
+      key: 4,
+      codice: '6543210009400',
+      altro: 'che ci sta qui ?',
+    }, {
+      key: 5,
+      codice: '6543210009400',
+      altro: 'che ci sta qui ?',
+    }
+  ])
+
+  const from = page * itemsPerPage;
+  const to = Math.min((page + 1) * itemsPerPage, items.length);
+
   return (
-    history.length > 0 ? (
-    <Card style={{marginTop:20}}>
-      <View style={styles.containerHistory}>
-        <Text style={styles.head1}>Storico Scansioni</Text>
-        <Text style={styles.body1}>Ultimi 10 articoli scansionati</Text>
-        <View style={styles.table}>
-          {history.map((code, idx_) => (
-            <TouchableOpacity key={idx_} style={styles.row} onPress={() => onRowPress(code)}>
-              <Text style={styles.codeText}>{code}</Text>
-              <Text style={styles.clickText}>Carica Articolo</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+    <Card style={{ margin: 10 }}>
+      <Text style={styles.titleCronologia}>Storico</Text>
+      <DataTable>
+        <DataTable.Header>
+          <DataTable.Title>Codice</DataTable.Title>
+          <DataTable.Title>Altro</DataTable.Title>
+        </DataTable.Header>
+
+        {items.slice(from, to).map((item) => (
+          <DataTable.Row key={item.key}>
+            <DataTable.Cell >{item.codice}</DataTable.Cell>
+            <DataTable.Cell>{item.altro}</DataTable.Cell>
+          </DataTable.Row>
+        ))}
+
+        <DataTable.Pagination
+          page={page}
+          numberOfPages={Math.ceil(items.length / itemsPerPage)}
+          onPageChange={(page) => setPage(page)}
+          label={`${from + 1}-${to} of ${items.length}`}
+          numberOfItemsPerPageList={numberOfItemsPerPageList}
+          numberOfItemsPerPage={itemsPerPage}
+          onItemsPerPageChange={onItemsPerPageChange}
+          showFastPaginationControls
+          selectPageDropdownLabel={'Righe per pagina'}
+        />
+      </DataTable>
+      <View style={{ borderTop: 10, padding: 10 }}>
+        <Button title="Vai a Scanner" color={secondaryColor}
+          onPress={() => navigation.navigate("Scanner")} />
+
       </View>
+      
+      <View style={{ borderTop: 10, padding: 10 }}>
+        <Button title="Vai a Articolo" color={primaryColor}
+          onPress={() => navigation.navigate("Articolo")} />
+      </View>
+      
     </Card>
-    ) : null
   );
 };
 
 
 export default HistoryComponent;
 
-/*  useEffect(() => {
-    const getHistory = async () => {
-      const codeHistory = await AsyncStorage.getItem("CodeHistory")
-      if(codeHistory !== null){
-        setHistory(JSON.parse(codeHistory))
-      }
-    }
-    const saveCode = async () => {
-      const codeHistory = await AsyncStorage.getItem("CodeHistory")
-      if(codeHistory === null){
-        AsyncStorage.setItem("CodeHistory", JSON.stringify([route.params.AM_CODICE]))
-      }else{
-        const codeHistoryArray = JSON.parse(codeHistory)
-        const codes = codeHistoryArray.push(route.params.AM_CODICE.replace(" ","")).slice(0,10)
-        const r  = await AsyncStorage.setItem("CodeHistory", JSON.stringify(codes))
-        console.log("Result of saving code: ", r)
-      }
-    }
-    saveCode()
-    getHistory()
-
-    return () => {}
-  },[]) */

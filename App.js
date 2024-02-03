@@ -10,6 +10,7 @@ import SettingComponent from './components/Settings/Settings';
 import InfoPage from './components/Info/InfoPage';
 import { Icon, Image, TouchableOpacity } from "react-native"
 import ScannerCode from './components/Scanner/Scanner';
+import HistoryComponent from './components/Home/History';
 
 const Drawer = createDrawerNavigator();
 
@@ -53,6 +54,15 @@ export default function App() {
           )
         }} />
         <Drawer.Screen name="Impostazioni" component={SettingComponent} options={{
+          drawerIcon: ({ focused, size }) => (
+            <AntDesign
+              name="setting"
+              size={size}
+              color={"#246ded"}
+            />
+          )
+        }} />
+        <Drawer.Screen name="Cronologia" component={HistoryComponent} options={{
           drawerIcon: ({ focused, size }) => (
             <AntDesign
               name="setting"

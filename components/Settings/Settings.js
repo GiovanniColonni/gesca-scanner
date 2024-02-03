@@ -3,7 +3,7 @@ import { View, TextInput, Text, StyleSheet, Button, Alert } from "react-native";
 import { confSchema, confSchemaValidate } from "./Model";
 import CustomAlertComponent from "./ErrorModal";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { styles } from "../style";
+import { primaryColor, styles } from "../style";
 import { Card,Chip } from 'react-native-paper';
 import base64 from 'react-native-base64'
 
@@ -29,8 +29,8 @@ function SettingComponent({ navigation }) {
 
     const server = await AsyncStorage.getItem("serverIP")
     const port = await AsyncStorage.getItem("port")
-    const username = await AsyncStorage.getItem("username")
-    const pass = await AsyncStorage.getItem("password")
+    const authCredentials = await AsyncStorage.getItem("authCredentials")
+
     const db = await AsyncStorage.getItem("databaseName")
 
     const goodConf = (server !== null) && (port !== null) && (username !== null) && (pass !== null) && (db !== null)
@@ -85,21 +85,20 @@ function SettingComponent({ navigation }) {
       return
     }
 
-
+    const authCredentials = base64.encode(good.data.username + ":" + good.data.password)
     // connect to server and test connection
     fetch("http://" + good.data.serverIP + ":" + good.data.port + "/healthcheck", {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Basic ' + base64.encode(good.data.username + ":" + good.data.password),
+        'Authorization': 'Basic ' + authCredentials,
       }
     }).then((resp) => {
       if (resp.status == 200) {
         try {
           AsyncStorage.setItem("serverIP", String(good.data.serverIP))
           AsyncStorage.setItem("port", String(good.data.port))
-          AsyncStorage.setItem("username", String(good.data.username))
-          AsyncStorage.setItem("password", String(good.data.password))
+          AsyncStorage.setItem("authCredentials", authCredentials)
           AsyncStorage.setItem("databaseName", String(good.data.databaseName))
           setConfFound(true)
         } catch (err) {
@@ -159,7 +158,7 @@ function SettingComponent({ navigation }) {
           value={conf.databaseName}
           onChangeText={(text) => handleChange(text, "databaseName")}
         />
-        <Button onPress={() => saveConfiguration()} title="Salva Configurazione" />
+        <Button onPress={() => saveConfiguration()} title="Salva Configurazione" color={primaryColor}/>
         <CustomAlertComponent modalVisible={modalErrorVisible} setModalVisible={setModalErrorVisible} errors={submitError} />
       </View>
     </Card>

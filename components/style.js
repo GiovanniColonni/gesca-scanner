@@ -1,4 +1,7 @@
 import { StyleSheet } from "react-native";
+export const primaryColor = "#03a9f4";
+export const secondaryColor = "#1A43BF";
+
 export const styles = StyleSheet.create({
     container: {
         alignItems: "center",
@@ -13,6 +16,11 @@ export const styles = StyleSheet.create({
         padding: 20,
     },
     containerHome1: {
+        alignItems: "center",
+        justifyContent: "flex-start",
+        padding: 20,
+    },
+    containerArticolo: {
         alignItems: "left",
         justifyContent: "flex-start",
         padding: 20,
@@ -38,6 +46,12 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginVertical: 10,
         // Additional styling if needed
+    },
+    titleCronologia: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginVertical: 10,
+        marginLeft: 10,
     },
     head1: {
         fontSize: 21,
@@ -86,4 +100,16 @@ export const styles = StyleSheet.create({
         fontSize: 16,
         color: 'blue',
     },
+    qntInput: {
+        padding:5,
+        borderWidth:1,
+        width:"40%"
+    },
+    qntInputError: {
+        padding:5,
+        borderWidth:1,
+        width:"40%",
+        borderColor: "red",
+        margin: 5,
+    }
 });

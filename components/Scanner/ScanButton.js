@@ -1,6 +1,8 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, View,Image } from 'react-native';
 import ScanIcon from '../../assets/icons/scanicon2.png';
+import { secondaryColor } from '../style';
+
 const ScanButton = ({ onPress }) => {
 
   return (
@@ -15,7 +17,7 @@ const ScanButton = ({ onPress }) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#246ded', //'#3a7ef2'
+    backgroundColor: secondaryColor, //'#3a7ef2'
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
